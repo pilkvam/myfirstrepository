@@ -1,1 +1,21 @@
-New File
+#!/bin/bash
+
+# ESXi Host Details
+ESXI_HOST="your_esxi_host"
+ESXI_USER="your_esxi_username"
+ESXI_PASSWORD="your_esxi_password"
+DATASTORE_NAME="your_datastore_name"
+FILE_ON_DATASTORE="file_on_datastore_path"
+
+# SFTP Server Details
+SFTP_SERVER="your_sftp_server"
+SFTP_USER="your_sftp_username"
+SFTP_PASSWORD="your_sftp_password"
+SFTP_DESTINATION="/path/to/sftp/destination"
+
+# Download file from ESXi vSAN Datastore
+sshpass -p "$ESXI_PASSWORD" sftp "$ESXI_USER"@"$ESXI_HOST" << EOF
+cd /vmfs/volumes/"$DATASTORE_NAME"
+get "$FILE_ON_DATASTORE" "$SFTP_DESTINATION"
+bye
+EOF
